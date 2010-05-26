@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="GeneralMatrix">
+</Property><Property Name="Solution File" Value="C:\Projects\ppgi-alc\GeneralMatrix\GeneralMatrix.sln">
+</Property><Property Name="Date" Value="Wednesday, May 26, 2010">
+</Property><Property Name="Time" Value="8:03 AM">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="GeneralMatrix.sln" Description="File successfully backed up as C:\Projects\ppgi-alc\GeneralMatrix\Backup\GeneralMatrix.sln">
+</Event><Event ErrorLevel="0" Project="GeneralMatrix" Source="GeneralMatrix.csproj" Description="Project file successfully backed up as C:\Projects\ppgi-alc\GeneralMatrix\Backup\GeneralMatrix.csproj">
+</Event><Event ErrorLevel="0" Project="GeneralMatrix" Source="GeneralMatrix.csproj.user" Description="Project user file successfully backed up as C:\Projects\ppgi-alc\GeneralMatrix\Backup\GeneralMatrix.csproj.user">
+</Event><Event ErrorLevel="0" Project="GeneralMatrix" Source="AssemblyInfo.cs" Description="File successfully backed up as C:\Projects\ppgi-alc\GeneralMatrix\Backup\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="GeneralMatrix" Source="CholeskyDecomposition.cs" Description="File successfully backed up as C:\Projects\ppgi-alc\GeneralMatrix\Backup\CholeskyDecomposition.cs">
+</Event><Event ErrorLevel="0" Project="GeneralMatrix" Source="EigenvalueDecomposition.cs" Description="File successfully backed up as C:\Projects\ppgi-alc\GeneralMatrix\Backup\EigenvalueDecomposition.cs">
+</Event><Event ErrorLevel="0" Project="GeneralMatrix" Source="GeneralMatrix.cs" Description="File successfully backed up as C:\Projects\ppgi-alc\GeneralMatrix\Backup\GeneralMatrix.cs">
+</Event><Event ErrorLevel="0" Project="GeneralMatrix" Source="LUDecomposition.cs" Description="File successfully backed up as C:\Projects\ppgi-alc\GeneralMatrix\Backup\LUDecomposition.cs">
+</Event><Event ErrorLevel="0" Project="GeneralMatrix" Source="QRDecomposition.cs" Description="File successfully backed up as C:\Projects\ppgi-alc\GeneralMatrix\Backup\QRDecomposition.cs">
+</Event><Event ErrorLevel="0" Project="GeneralMatrix" Source="SingularValueDecomposition.cs" Description="File successfully backed up as C:\Projects\ppgi-alc\GeneralMatrix\Backup\SingularValueDecomposition.cs">
+</Event><Event ErrorLevel="0" Project="GeneralMatrix" Source="GeneralMatrix.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="GeneralMatrix" Source="GeneralMatrix.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="GeneralMatrix.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="GeneralMatrix.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="GeneralMatrix" Source="GeneralMatrix.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>
