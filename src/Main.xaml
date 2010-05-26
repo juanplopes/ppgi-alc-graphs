@@ -1,19 +1,44 @@
 ﻿<Window x:Class="EigenThings.Main"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Eigenthings" Height="402" Width="844"         
+    Title="Eigenthings" Height="408" Width="855"         
         xmlns:Sample="clr-namespace:EigenThings"
                 xmlns:isom="clr-namespace:GraphSharp.Algorithms.Layout.Simple.FDP;assembly=GraphSharp"
 
         xmlns:zoom="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions">
     <Grid>
-        <TextBox Name="GraphText" AcceptsReturn="True" DockPanel.Dock="Top" Margin="6,0,0,0" Height="170" VerticalAlignment="Top" HorizontalAlignment="Left" Width="194" />
-        <Button Name="CreateGraph" Click="CreateGraph_Click" DockPanel.Dock="Bottom" Margin="6,176,0,165" HorizontalAlignment="Left" Width="194">Mostrar</Button>
-        <Sample:MyGraphLayout x:Name="layout" Margin="206,12,374,0"  LayoutAlgorithmType="ISOM" OverlapRemovalAlgorithmType="FSA" Graph="{Binding}" ShowAllStates="false" AsyncCompute="True" HighlightAlgorithmType="Simple" VerticalAlignment="Top">
+        <TextBox Name="GraphText" AcceptsReturn="True" DockPanel.Dock="Top" Margin="6,153,0,41" HorizontalAlignment="Left" Width="194" />
+        <Button Name="CreateGraph" Click="CreateGraph_Click" DockPanel.Dock="Bottom" Margin="6,0,0,12" HorizontalAlignment="Left" Width="194" Height="23" VerticalAlignment="Bottom">Mostrar</Button>
+        <Sample:MyGraphLayout x:Name="layout"  LayoutAlgorithmType="ISOM" OverlapRemovalAlgorithmType="FSA" Graph="{Binding}" ShowAllStates="false" AsyncCompute="True" HighlightAlgorithmType="Simple" Margin="206,12,352,12">
             <Sample:MyGraphLayout.LayoutParameters>
                 <isom:ISOMLayoutParameters />
             </Sample:MyGraphLayout.LayoutParameters>
         </Sample:MyGraphLayout>
+        <ListView Height="135" HorizontalAlignment="Left" Margin="6,12,0,0" Name="FileList" VerticalAlignment="Top" Width="194" SelectionChanged="FileList_SelectionChanged" />
+        <TabControl Margin="0,12,12,12" Name="tabControl1" Width="334" HorizontalAlignment="Right">
+            <TabItem Header="Adjacência" Name="tabItem1">
+                <Viewbox Height="auto"  HorizontalAlignment="Stretch">
+                    <TextBlock>
+                        <TextBlock Height="auto" Name="AdjacencyMatrix" Text="0"/>
+                        <LineBreak></LineBreak>
+                        <Label>Autovalores:</Label>
+                        <LineBreak></LineBreak>
+                        <TextBlock Name="AdjacencyEigen" Text="0"></TextBlock>
+                    </TextBlock>
+                </Viewbox>
+            </TabItem>
+            <TabItem Header="Laplaciana" Name="tabItem2">
+                <Viewbox Height="auto"  HorizontalAlignment="Stretch">
+                    <TextBlock>
+                        <TextBlock Height="auto" Name="LaplacianMatrix" Text="0"/>
+                        <LineBreak></LineBreak>
+                        <Label>Autovalores:</Label>
+                        <LineBreak></LineBreak>
+                        <TextBlock Name="LaplacianEigen" Text="0"></TextBlock>
+                    </TextBlock>
+                </Viewbox>
+            </TabItem>
+        </TabControl>
     </Grid>
 
 </Window>

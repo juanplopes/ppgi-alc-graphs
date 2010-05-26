@@ -9,11 +9,11 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using GraphSharp.Controls;
 using QuickGraph;
-using CSML;
 using System.Globalization;
+using System.IO;
+using WPFExtensions.Controls;
 
 namespace EigenThings
 {
@@ -22,13 +22,11 @@ namespace EigenThings
     /// </summary>
     public partial class Main : Window
     {
-        private BidirectionalGraph<string, IEdge<string>> graph;
-
         public Main()
         {
             InitializeComponent();
-            graph = new BidirectionalGraph<string, IEdge<string>>();
-            DataContext = graph;
+            var files = Directory.GetFiles(".", "*.graph.txt").Select(x => Path.GetFileName(x));
+            FileList.ItemsSource = files;
         }
 
         private void Relayout_Click(object sender, RoutedEventArgs e)
@@ -38,35 +36,20 @@ namespace EigenThings
 
         private void CreateGraph_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = graph = new BidirectionalGraph<string, IEdge<string>>();
-            var m = new Matrix(GraphText.Text);
-            
-            foreach(var number in Enumerable.Range(1, m.ColumnCount))
-                graph.AddVertex(number.ToString());
+            var file = new GraphFile(GraphText.Text);
+            DataContext = file.Graph;
+            AdjacencyMatrix.Text = file.GetAdjacencyRepresentation();
+            AdjacencyEigen.Text = file.GetAdjacencyEigenRepresentation();
 
-            for (int i = 1; i <= m.RowCount; i++)
-            {
-                for (int j = 1; j <= m.ColumnCount; j++)
-                {
-                    if (m[i,j] != 0)
-                    {
-                        m[i,j] = new Complex(1);
-                        graph.AddEdge(new Edge<string>(i.ToString(), j.ToString()));
-                    }
-                }
-            }
+            LaplacianMatrix.Text = file.GetLaplacianRepresentation();
+            LaplacianEigen.Text = file.GetLaplacianEigenRepresentation();
 
-
-            //Eigenvalues.Content = string.Join(", ", EigenvalueList(m).OrderByDescending(x=>x).Select(x => x.ToString("0.00", CultureInfo.InvariantCulture)).ToArray());
-
+            layout.Relayout();
         }
 
-        private IEnumerable<double> EigenvalueList(Matrix m)
+        private void FileList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            for (int i = 1; i <= m.RowCount; i++)
-            {
-                yield return m[i,1].Re;
-            }
+            GraphText.Text = File.ReadAllText(e.AddedItems.Cast<string>().First());
         }
     }
     public class MyGraphLayout : GraphLayout<string, IEdge<string>, IBidirectionalGraph<string, IEdge<string>>> { }
