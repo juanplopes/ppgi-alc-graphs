@@ -128,6 +128,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="big_bipartite.graph.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="test.graph.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

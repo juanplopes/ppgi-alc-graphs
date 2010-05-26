@@ -69,6 +69,12 @@ namespace EigenThings
             var components = eigen.RealEigenvalues.Where(x => Math.Abs(x) < 1e-5f).Count();
             var spanningTrees = eigen.RealEigenvalues.Where(x => Math.Abs(x) > 1e-5f).Aggregate(1.0, (x, y) => x * y) / Vertices;
 
+            var adjEigen = AdjacencyEigen;
+            bool isBipartite = true;
+            for (int i = 0; i < Math.Ceiling(adjEigen.RealEigenvalues.Length/2.0); i++)
+            {
+                isBipartite = Math.Abs((adjEigen.RealEigenvalues[i] + adjEigen.RealEigenvalues[adjEigen.RealEigenvalues.Length - i - 1])) < 1e-5f;
+            }
 
             var builder = new StringBuilder();
             builder.AppendFormat("Número de componentes: {0}\n", components);
@@ -78,6 +84,11 @@ namespace EigenThings
                 builder.AppendFormat("Grafo conexo: árvores geradoras: {0:0}\n", spanningTrees);
             else
                 builder.AppendFormat("Grafo não-conexo\n");
+
+            if (isBipartite)
+                builder.AppendFormat("Grafo bipartido\n");
+            else
+                builder.AppendFormat("Grafo não-bipartido\n");
 
             return builder.ToString();
         }
