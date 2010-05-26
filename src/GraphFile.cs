@@ -14,7 +14,13 @@ namespace EigenThings
         public BidirectionalGraph<string, IEdge<string>> Graph { get; protected set; }
         public GeneralMatrix AdjacencyMatrix { get; protected set; }
         public GeneralMatrix LaplacianMatrix { get; protected set; }
+
+        public EigenvalueDecomposition AdjacencyEigen { get; protected set; }
+        public EigenvalueDecomposition LaplacianEigen { get; protected set; }
+
         public int Vertices { get; protected set; }
+
+
 
         public GraphFile(string fileContent)
         {
@@ -38,14 +44,19 @@ namespace EigenThings
             return RepresentateMatrix(LaplacianMatrix);
         }
 
+        public string GetLaplacianEigenVectorRepresentation()
+        {
+            return RepresentateMatrix(LaplacianEigen.GetV());
+        }
+
         public string GetAdjacencyEigenRepresentation()
         {
-            return RepresentateEigen(AdjacencyMatrix);
+            return RepresentateEigen(AdjacencyEigen);
         }
 
         public string GetLaplacianEigenRepresentation()
         {
-            return RepresentateEigen(LaplacianMatrix);
+            return RepresentateEigen(LaplacianEigen);
         }
 
         public string GetInformation()
@@ -54,27 +65,30 @@ namespace EigenThings
             var matrix1 = AdjacencyMatrix.Multiply(AdjacencyMatrix).Multiply(AdjacencyMatrix);
             var tris = (Enumerable.Range(0, Vertices).Sum(x => matrix1.GetElement(x, x)) / 6).ToString("0");
 
-            var eigen = LaplacianMatrix.Eigen();
+            var eigen = LaplacianEigen;
             var components = eigen.RealEigenvalues.Where(x => Math.Abs(x) < 1e-5f).Count();
             var spanningTrees = eigen.RealEigenvalues.Where(x => Math.Abs(x) > 1e-5f).Aggregate(1.0, (x, y) => x * y) / Vertices;
 
 
             var builder = new StringBuilder();
             builder.AppendFormat("Número de componentes: {0}\n", components);
+            builder.AppendFormat("Conectividade algébrica: {0:0.00}\n", eigen.RealEigenvalues.OrderBy(x => x).Skip(1).FirstOrDefault());
             builder.AppendFormat("Número de triângulos: {0}\n", tris);
-            builder.AppendFormat("Árvores geradoras: {0:0}\n", Math.Truncate(spanningTrees + 1e-5f));
+            if (components == 1)
+                builder.AppendFormat("Grafo conexo: árvores geradoras: {0:0}\n", spanningTrees);
+            else
+                builder.AppendFormat("Grafo não-conexo\n");
 
             return builder.ToString();
         }
 
-        private string RepresentateEigen(GeneralMatrix matrix)
+        private string RepresentateEigen(EigenvalueDecomposition eigen)
         {
             var builder = new StringBuilder();
-            var eigen = new EigenvalueDecomposition(matrix);
 
-            foreach (var value in eigen.RealEigenvalues.OrderByDescending(x => x).OrderByDescending(x => x))
+            foreach (var value in eigen.RealEigenvalues)
             {
-                builder.Append(value.ToString("0.00 "));
+                builder.Append(value.ToString(" 0.00 ;-0.00 "));
             }
             return builder.ToString();
         }
@@ -87,7 +101,7 @@ namespace EigenThings
             {
                 for (int j = 0; j < Vertices; j++)
                 {
-                    builder.Append(matrix.GetElement(i, j).ToString("0.00 "));
+                    builder.Append(matrix.GetElement(i, j).ToString(" 0.00 ;-0.00 "));
                 }
                 builder.Append("\n");
             }
@@ -134,7 +148,8 @@ namespace EigenThings
                 LaplacianMatrix.SetElement(i, i, count);
             }
 
-
+            LaplacianEigen = LaplacianMatrix.Eigen();
+            AdjacencyEigen = AdjacencyMatrix.Eigen();
         }
     }
 }

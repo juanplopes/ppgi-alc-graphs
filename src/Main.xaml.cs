@@ -43,6 +43,7 @@ namespace EigenThings
 
             LaplacianMatrix.Text = file.GetLaplacianRepresentation();
             LaplacianEigen.Text = file.GetLaplacianEigenRepresentation();
+            LaplacianEigenMatrix.Text = file.GetLaplacianEigenVectorRepresentation();
 
             Information.Text = file.GetInformation();
 

@@ -26,22 +26,24 @@
 
             <TabItem Header="Grafo" Name="tabItem0">
                 <Grid Background="White">
-                    <Sample:MyGraphLayout x:Name="layout" Grid.Column="1"  LayoutAlgorithmType="ISOM" OverlapRemovalAlgorithmType="FSA" Graph="{Binding}" ShowAllStates="false" HorizontalAlignment="Stretch" AsyncCompute="True" HighlightAlgorithmType="Simple">
-                        <Sample:MyGraphLayout.LayoutParameters>
-                            <isom:ISOMLayoutParameters />
-                        </Sample:MyGraphLayout.LayoutParameters>
-                    </Sample:MyGraphLayout>
+                    <zoom:ZoomControl>
+                        <Sample:MyGraphLayout x:Name="layout" Grid.Column="1"  LayoutAlgorithmType="ISOM" OverlapRemovalAlgorithmType="FSA" Graph="{Binding}" ShowAllStates="false" HorizontalAlignment="Stretch" AsyncCompute="True" HighlightAlgorithmType="Simple">
+                            <Sample:MyGraphLayout.LayoutParameters>
+                                <isom:ISOMLayoutParameters />
+                            </Sample:MyGraphLayout.LayoutParameters>
+                        </Sample:MyGraphLayout>
+                    </zoom:ZoomControl>
                 </Grid>
             </TabItem>
             <TabItem Header="Adjacência" Name="tabItem1">
                 <Grid Background="White">
                     <Viewbox Height="auto" Width="auto" HorizontalAlignment="Stretch">
                         <TextBlock>
-                        <TextBlock Height="auto" Name="AdjacencyMatrix" Text="0" />
+                        <TextBlock Height="auto" Name="AdjacencyMatrix" FontFamily="Courier New" FontWeight="Bold"  Text="0" />
                         <LineBreak></LineBreak>
                         <Label>Autovalores:</Label>
                         <LineBreak></LineBreak>
-                        <TextBlock Name="AdjacencyEigen" Text="0"></TextBlock>
+                        <TextBlock Name="AdjacencyEigen" FontFamily="Courier New" FontWeight="Bold" Text="0"></TextBlock>
                     </TextBlock>
                     </Viewbox>
                 </Grid>
@@ -50,11 +52,21 @@
                 <Grid Background="White">
                     <Viewbox Height="auto" HorizontalAlignment="Stretch">
                         <TextBlock>
-                        <TextBlock Height="auto" Name="LaplacianMatrix" Text="0" />
+                        <TextBlock Height="auto" Name="LaplacianMatrix" FontFamily="Courier New" FontWeight="Bold" Text="0" />
                         <LineBreak></LineBreak>
                         <Label>Autovalores:</Label>
                         <LineBreak></LineBreak>
-                        <TextBlock Name="LaplacianEigen" Text="0"></TextBlock>
+                        <TextBlock Name="LaplacianEigen" FontFamily="Courier New" FontWeight="Bold"  Text="0"></TextBlock>
+                    </TextBlock>
+                    </Viewbox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Auto-vetores laplacianos" Name="tabItem4">
+                <Grid Background="White">
+
+                    <Viewbox Height="auto" HorizontalAlignment="Stretch">
+                        <TextBlock>
+                        <TextBlock Height="auto" Name="LaplacianEigenMatrix" FontFamily="Courier New" FontWeight="Bold" Text="0" />
                     </TextBlock>
                     </Viewbox>
                 </Grid>
@@ -66,6 +78,7 @@
                     </Viewbox>
                 </Grid>
             </TabItem>
+
         </TabControl>
 
 
