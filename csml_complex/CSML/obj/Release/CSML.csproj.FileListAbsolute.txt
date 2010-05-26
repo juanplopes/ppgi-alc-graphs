@@ -1,5 +1,0 @@
-C:\Users\JLopes\Desktop\ppgi-alc\csml_complex\CSML\bin\Release\CSML.dll
-C:\Users\JLopes\Desktop\ppgi-alc\csml_complex\CSML\bin\Release\CSML.pdb
-C:\Users\JLopes\Desktop\ppgi-alc\csml_complex\CSML\obj\Release\ResolveAssemblyReference.cache
-C:\Users\JLopes\Desktop\ppgi-alc\csml_complex\CSML\obj\Release\CSML.dll
-C:\Users\JLopes\Desktop\ppgi-alc\csml_complex\CSML\obj\Release\CSML.pdb
