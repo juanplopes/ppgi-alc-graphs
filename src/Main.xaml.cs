@@ -57,7 +57,7 @@ namespace EigenThings
             }
 
 
-            Eigenvalues.Content = string.Join(", ", EigenvalueList(m).OrderByDescending(x=>x).Select(x => x.ToString("0.00", CultureInfo.InvariantCulture)).ToArray());
+            //Eigenvalues.Content = string.Join(", ", EigenvalueList(m).OrderByDescending(x=>x).Select(x => x.ToString("0.00", CultureInfo.InvariantCulture)).ToArray());
 
         }
 
