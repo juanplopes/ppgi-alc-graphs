@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual C# Express 2008
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual C# Express 2005
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSML", "CSML\CSML.csproj", "{8CD08024-CDBD-4FDB-9B9F-EA35B513BE92}"
 EndProject
 Global

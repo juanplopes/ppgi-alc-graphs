@@ -1,0 +1,34 @@
+C:\Users\JLopes\AppData\Local\Temporary Projects\EigenThings\bin\Release\EigenThings.exe
+C:\Users\JLopes\AppData\Local\Temporary Projects\EigenThings\bin\Release\EigenThings.pdb
+C:\Users\JLopes\AppData\Local\Temporary Projects\EigenThings\obj\Release\ResolveAssemblyReference.cache
+C:\Users\JLopes\AppData\Local\Temporary Projects\EigenThings\obj\Release\Main.baml
+C:\Users\JLopes\AppData\Local\Temporary Projects\EigenThings\obj\Release\Main.g.cs
+C:\Users\JLopes\AppData\Local\Temporary Projects\EigenThings\obj\Release\App.g.cs
+C:\Users\JLopes\AppData\Local\Temporary Projects\EigenThings\obj\Release\EigenThings_MarkupCompile.cache
+C:\Users\JLopes\AppData\Local\Temporary Projects\EigenThings\obj\Release\EigenThings.g.resources
+C:\Users\JLopes\AppData\Local\Temporary Projects\EigenThings\obj\Release\EigenThings.Properties.Resources.resources
+C:\Users\JLopes\AppData\Local\Temporary Projects\EigenThings\obj\Release\EigenThings.csproj.GenerateResource.Cache
+C:\Users\JLopes\AppData\Local\Temporary Projects\EigenThings\obj\Release\EigenThings.exe
+C:\Users\JLopes\AppData\Local\Temporary Projects\EigenThings\obj\Release\EigenThings.pdb
+C:\Users\JLopes\Desktop\ppgi-alc\src\EigenThings\obj\Release\EigenThings.exe
+C:\Users\JLopes\Desktop\ppgi-alc\src\EigenThings\obj\Release\EigenThings.pdb
+C:\Users\JLopes\Desktop\ppgi-alc\src\obj\Release\EigenThings.exe
+C:\Users\JLopes\Desktop\ppgi-alc\src\obj\Release\EigenThings.pdb
+C:\Users\JLopes\Desktop\ppgi-alc\src\obj\Release\ResolveAssemblyReference.cache
+C:\Users\JLopes\Desktop\ppgi-alc\src\obj\Release\Main.g.cs
+C:\Users\JLopes\Desktop\ppgi-alc\src\obj\Release\App.g.cs
+C:\Users\JLopes\Desktop\ppgi-alc\src\obj\Release\GeneratedInternalTypeHelper.g.cs
+C:\Users\JLopes\Desktop\ppgi-alc\src\obj\Release\EigenThings_MarkupCompile.cache
+C:\Users\JLopes\Desktop\ppgi-alc\src\obj\Release\EigenThings_MarkupCompile.lref
+C:\Users\JLopes\Desktop\ppgi-alc\src\bin\Release\EigenThings.exe
+C:\Users\JLopes\Desktop\ppgi-alc\src\bin\Release\EigenThings.pdb
+C:\Users\JLopes\Desktop\ppgi-alc\src\bin\Release\GraphSharp.Controls.dll
+C:\Users\JLopes\Desktop\ppgi-alc\src\bin\Release\GraphSharp.dll
+C:\Users\JLopes\Desktop\ppgi-alc\src\bin\Release\QuickGraph.dll
+C:\Users\JLopes\Desktop\ppgi-alc\src\bin\Release\WPFExtensions.dll
+C:\Users\JLopes\Desktop\ppgi-alc\src\obj\Release\Main.baml
+C:\Users\JLopes\Desktop\ppgi-alc\src\obj\Release\EigenThings.g.resources
+C:\Users\JLopes\Desktop\ppgi-alc\src\obj\Release\EigenThings.Properties.Resources.resources
+C:\Users\JLopes\Desktop\ppgi-alc\src\obj\Release\EigenThings.csproj.GenerateResource.Cache
+C:\Users\JLopes\Desktop\ppgi-alc\src\obj\Release\Resources\PocGraphDataTemplates.baml
+C:\Users\JLopes\Desktop\ppgi-alc\src\obj\Release\App.baml
