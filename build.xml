@@ -1,0 +1,83 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <GCProjectName>ppgi-alc</GCProjectName>
+
+    <BuildDir>build</BuildDir>
+    <BuildDir2>$(MSBuildProjectDirectory)\$(BuildDir)</BuildDir2>
+
+    <SourceDir>src\</SourceDir>
+    <PackageDir>pkg\</PackageDir>
+    <PackageBinZipFile>ppgi-alc-juanlopes.zip</PackageBinZipFile>
+
+    <Configuration>Release</Configuration>
+    <Platform>Any CPU</Platform>
+	
+    <ProductVersion>1.0</ProductVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <SolutionFile Include="$(SourceDir)\EigenThings.sln" />
+  </ItemGroup>
+
+  <Import Project="util\msbuild\MSBuild.Community.Tasks.Targets"/>
+  <Import Project="util\msbuild\Simple.Tools.MsBuild.Targets"/>
+
+  <Target Name="Clean">
+    <MSBuild Projects="@(SolutionFile)" Targets="Clean" Properties="Configuration=$(Configuration);Platform=$(Platform);OutputPath=$(BuildDir2)"/>
+    <DeleteTree Directories="$(BuildDir)" ContinueOnError="true"/>
+    <DeleteTree Directories="$(PackageDir)" ContinueOnError="true"/>
+  </Target>
+
+  <Target Name="GenerateTag">
+    <Time Format="yMM.dhh">
+      <Output TaskParameter="FormattedTime" PropertyName="BuildTag" />
+    </Time>
+
+    <Message Text="Build tag: $(BuildTag)"/>
+  </Target>
+
+  <Target Name="GenerateAssemblyInfo" DependsOnTargets="GenerateTag">
+    <AssemblyInfo CodeLanguage="CS"
+               OutputFile="$(SourceDir)\GlobalInfo.cs"
+               AssemblyCompany="Juan Lopes"
+               AssemblyProduct="EigenThings"
+               AssemblyCopyright="Copyright (c) Juan Lopes 2010"
+               AssemblyTrademark=""
+               ComVisible="false"
+               CLSCompliant="false"
+               AssemblyVersion="$(ProductVersion).$(BuildTag)"
+               AssemblyFileVersion="$(ProductVersion).$(BuildTag)" />
+  </Target>
+
+  <Target Name="Build" DependsOnTargets ="GenerateAssemblyInfo">
+    <MSBuild Projects="@(SolutionFile)" Properties="Configuration=$(Configuration);Platform=$(Platform);OutputPath=$(BuildDir2)"/>
+  </Target>
+
+  <Target Name="Rebuild">
+    <CallTarget Targets="Clean; Build"></CallTarget>
+  </Target>
+
+  <Target Name="Package" DependsOnTargets="Build">
+    <ItemGroup>
+      <PackageItems Include="$(BuildDir)\**" Exclude="$(BuildDir)\**\*.pdb"/>
+    </ItemGroup>
+
+    <MakeDir Directories="$(PackageDir)"/>
+
+    <Delete Files="$(PackageDir)\$(PackageBinZipFile)"/>
+    <Zip Files="@(PackageItems)" ZipFileName="$(PackageDir)\$(PackageBinZipFile)" WorkingDirectory="$(BuildDir)"/>
+  </Target>
+
+  <Target Name="Publish" DependsOnTargets="Package">
+    <UploadToGoogleCode
+     UserName="$(GCUsername)"
+     Password="$(GCPassword)"
+     ProjectName="$(GCProjectName)"
+     LocalFile="$(PackageDir)\$(PackageBinZipFile)"
+     TargetFileName="$(PackageBinZipFile)"
+     Summary="EigenThings v$(ProductVersion).$(BuildTag)"
+     Labels="Nightly;Type-Package;Featured"
+      />
+  </Target>
+
+</Project>
