@@ -24,7 +24,7 @@ namespace EigenThings
 
         protected IEnumerable<int> ReadFile()
         {
-            var matches = Regex.Matches(FileContent, @"\d");
+            var matches = Regex.Matches(FileContent, @"\d+");
             return matches.Cast<Match>().Where(x => x.Success).Select(x => int.Parse(x.Value));
         }
 
@@ -48,6 +48,24 @@ namespace EigenThings
             return RepresentateEigen(LaplacianMatrix);
         }
 
+        public string GetInformation()
+        {
+            var asvd = AdjacencyMatrix.SVD();
+            var matrix1 = AdjacencyMatrix.Multiply(AdjacencyMatrix).Multiply(AdjacencyMatrix);
+            var tris = (Enumerable.Range(0, Vertices).Sum(x => matrix1.GetElement(x, x)) / 6).ToString("0");
+
+            var eigen = LaplacianMatrix.Eigen();
+            var components = eigen.RealEigenvalues.Where(x => Math.Abs(x) < 1e-5f).Count();
+            var spanningTrees = eigen.RealEigenvalues.Where(x => Math.Abs(x) > 1e-5f).Aggregate(1.0, (x, y) => x * y) / Vertices;
+
+
+            var builder = new StringBuilder();
+            builder.AppendFormat("Número de componentes: {0}\n", components);
+            builder.AppendFormat("Número de triângulos: {0}\n", tris);
+            builder.AppendFormat("Árvores geradoras: {0:0}\n", Math.Truncate(spanningTrees + 1e-5f));
+
+            return builder.ToString();
+        }
 
         private string RepresentateEigen(GeneralMatrix matrix)
         {

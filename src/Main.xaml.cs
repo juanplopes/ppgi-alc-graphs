@@ -44,6 +44,8 @@ namespace EigenThings
             LaplacianMatrix.Text = file.GetLaplacianRepresentation();
             LaplacianEigen.Text = file.GetLaplacianEigenRepresentation();
 
+            Information.Text = file.GetInformation();
+
             layout.Relayout();
         }
 
