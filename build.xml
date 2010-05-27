@@ -8,7 +8,9 @@
     <SourceDir>src\</SourceDir>
     <PackageDir>pkg\</PackageDir>
     <PackageBinZipFile>ppgi-alc-juanlopes.zip</PackageBinZipFile>
+    <PackageSrcZipFile>ppgi-alc-juanlopes-src.zip</PackageSrcZipFile>
 
+	
     <Configuration>Release</Configuration>
     <Platform>Any CPU</Platform>
 	
@@ -68,8 +70,39 @@
     <Zip Files="@(PackageItems)" ZipFileName="$(PackageDir)\$(PackageBinZipFile)" WorkingDirectory="$(BuildDir)"/>
   </Target>
 
-  <Target Name="Publish" DependsOnTargets="Package">
+   <Target Name="PackageSource">
+    <ItemGroup>
+      <ExcludeSrcDir Include=".\**\pkg\**"/>
+      <ExcludeSrcDir Include=".\**\bin\**"/>
+      <ExcludeSrcDir Include=".\**\build\**"/>
+      <ExcludeSrcDir Include=".\**\obj\**"/>
+      <ExcludeSrcDir Include=".\**\.svn\**"/>
+      <ExcludeSrcDir Include=".\**\_svn\**"/>
+      <ExcludeSrcDir Include=".\**\*.zip"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ZipSrcDir Include=".\**\*" Exclude="@(ExcludeSrcDir)" />
+    </ItemGroup>
+
+    <MakeDir Directories="$(PackageDir)"/>
+
+    <Delete Files="$(PackageDir)\$(PackageSrcZipFile)"/>
+    <Zip Files="@(ZipSrcDir)" ZipFileName="$(PackageDir)\$(PackageSrcZipFile)" WorkingDirectory="$(MSBuildProjectDirectory)"/>
+  </Target>
+  
+  <Target Name="Publish" DependsOnTargets="Package;PackageSource">
     <UploadToGoogleCode
+      UserName="$(GCUsername)"
+      Password="$(GCPassword)"
+      ProjectName="$(GCProjectName)"
+      LocalFile="$(PackageDir)\$(PackageSrcZipFile)"
+      TargetFileName="$(PackageSrcZipFile)"
+      Summary="EigenThings v$(ProductVersion).$(BuildTag) (Source)"
+      Labels="Nightly;Type-Package;Featured"
+              />
+  
+  <UploadToGoogleCode
      UserName="$(GCUsername)"
      Password="$(GCPassword)"
      ProjectName="$(GCProjectName)"
@@ -78,6 +111,7 @@
      Summary="EigenThings v$(ProductVersion).$(BuildTag)"
      Labels="Nightly;Type-Package;Featured"
       />
+	  
   </Target>
 
 </Project>
