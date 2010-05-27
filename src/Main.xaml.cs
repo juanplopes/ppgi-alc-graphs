@@ -25,7 +25,7 @@ namespace EigenThings
         public Main()
         {
             InitializeComponent();
-            var files = Directory.GetFiles(".", "*.graph.txt").Select(x => Path.GetFileName(x));
+            var files = Directory.GetFiles("Graphs", "*.graph.txt").Select(x => Path.GetFileName(x));
             FileList.ItemsSource = files;
         }
 
@@ -52,7 +52,7 @@ namespace EigenThings
 
         private void FileList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            GraphText.Text = File.ReadAllText(e.AddedItems.Cast<string>().First());
+            GraphText.Text = File.ReadAllText(Path.Combine("Graphs", e.AddedItems.Cast<string>().First()));
         }
     }
     public class MyGraphLayout : GraphLayout<string, IEdge<string>, IBidirectionalGraph<string, IEdge<string>>> { }

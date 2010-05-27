@@ -115,6 +115,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Content Include="..\doc\Apresentacao.pptx">
+      <Link>Documentation\Apresentacao.pptx</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\doc\Pesquisa.pdf">
+      <Link>Documentation\Pesquisa.pdf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -128,16 +136,16 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="big_bipartite.graph.txt">
+    <Content Include="Graphs\big_bipartite.graph.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="nauru.graph.txt">
+    <Content Include="Graphs\nauru.graph.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="petersen.graph.txt">
+    <Content Include="Graphs\petersen.graph.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="star.graph.txt">
+    <Content Include="Graphs\star.graph.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
