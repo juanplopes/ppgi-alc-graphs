@@ -1,1 +1,1 @@
-call build Package
+call build "Package;PackageSource"

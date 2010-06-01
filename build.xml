@@ -51,7 +51,7 @@
                AssemblyFileVersion="$(ProductVersion).$(BuildTag)" />
   </Target>
 
-  <Target Name="Build" DependsOnTargets ="GenerateAssemblyInfo">
+  <Target Name="Build" DependsOnTargets="GenerateAssemblyInfo">
     <MSBuild Projects="@(SolutionFile)" Properties="Configuration=$(Configuration);Platform=$(Platform);OutputPath=$(BuildDir2)"/>
   </Target>
 
