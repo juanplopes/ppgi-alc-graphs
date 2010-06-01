@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using QuickGraph;
 using System.Text.RegularExpressions;
-using DotNetMatrix;
 
 namespace EigenThings
 {
@@ -12,11 +11,11 @@ namespace EigenThings
     {
         public string FileContent { get; set; }
         public BidirectionalGraph<string, IEdge<string>> Graph { get; protected set; }
-        public GeneralMatrix AdjacencyMatrix { get; protected set; }
-        public GeneralMatrix LaplacianMatrix { get; protected set; }
+        public double[][] AdjacencyMatrix { get; protected set; }
+        public double[][] LaplacianMatrix { get; protected set; }
 
-        public EigenvalueDecomposition AdjacencyEigen { get; protected set; }
-        public EigenvalueDecomposition LaplacianEigen { get; protected set; }
+        public SymmetricEigenvalues AdjacencyEigen { get; protected set; }
+        public SymmetricEigenvalues LaplacianEigen { get; protected set; }
 
         public int Vertices { get; protected set; }
 
@@ -46,39 +45,38 @@ namespace EigenThings
 
         public string GetLaplacianEigenVectorRepresentation()
         {
-            return RepresentateMatrix(LaplacianEigen.GetV());
+            return RepresentateMatrix(LaplacianEigen.EigenVectors);
         }
 
         public string GetAdjacencyEigenRepresentation()
         {
-            return RepresentateEigen(AdjacencyEigen);
+            return RepresentateEigen(AdjacencyEigen.EigenValues);
         }
 
         public string GetLaplacianEigenRepresentation()
         {
-            return RepresentateEigen(LaplacianEigen);
+            return RepresentateEigen(LaplacianEigen.EigenValues);
         }
 
         public string GetInformation()
         {
-            var asvd = AdjacencyMatrix.SVD();
             var matrix1 = AdjacencyMatrix.Multiply(AdjacencyMatrix).Multiply(AdjacencyMatrix);
-            var tris = (Enumerable.Range(0, Vertices).Sum(x => matrix1.GetElement(x, x)) / 6).ToString("0");
+            var tris = (Enumerable.Range(0, Vertices).Sum(x => matrix1[x][x]) / 6).ToString("0");
 
             var eigen = LaplacianEigen;
-            var components = eigen.RealEigenvalues.Where(x => Math.Abs(x) < 1e-5f).Count();
-            var spanningTrees = eigen.RealEigenvalues.Where(x => Math.Abs(x) > 1e-5f).Aggregate(1.0, (x, y) => x * y) / Vertices;
+            var components = eigen.EigenValues.Where(x => Math.Abs(x) < 1e-5f).Count();
+            var spanningTrees = eigen.EigenValues.Where(x => Math.Abs(x) > 1e-5f).Aggregate(1.0, (x, y) => x * y) / Vertices;
 
             var adjEigen = AdjacencyEigen;
             bool isBipartite = true;
-            for (int i = 0; i < Math.Ceiling(adjEigen.RealEigenvalues.Length/2.0); i++)
+            for (int i = 0; i < Math.Ceiling(adjEigen.EigenValues.Length/2.0); i++)
             {
-                isBipartite = Math.Abs((adjEigen.RealEigenvalues[i] + adjEigen.RealEigenvalues[adjEigen.RealEigenvalues.Length - i - 1])) < 1e-5f;
+                isBipartite = Math.Abs((adjEigen.EigenValues[i] + adjEigen.EigenValues[adjEigen.EigenValues.Length - i - 1])) < 1e-5f;
             }
 
             var builder = new StringBuilder();
             builder.AppendFormat("Número de componentes: {0}\n", components);
-            builder.AppendFormat("Conectividade algébrica: {0:0.00}\n", eigen.RealEigenvalues.OrderBy(x => x).Skip(1).FirstOrDefault());
+            builder.AppendFormat("Conectividade algébrica: {0:0.00}\n", eigen.EigenValues.OrderBy(x => x).Skip(1).FirstOrDefault());
             builder.AppendFormat("Número de triângulos: {0}\n", tris);
             if (components == 1)
                 builder.AppendFormat("Grafo conexo: árvores geradoras: {0:0}\n", spanningTrees);
@@ -93,18 +91,18 @@ namespace EigenThings
             return builder.ToString();
         }
 
-        private string RepresentateEigen(EigenvalueDecomposition eigen)
+        private string RepresentateEigen(double[] eigen)
         {
             var builder = new StringBuilder();
 
-            foreach (var value in eigen.RealEigenvalues)
+            foreach (var value in eigen)
             {
                 builder.Append(value.ToString(" 0.00 ;-0.00 "));
             }
             return builder.ToString();
         }
 
-        private string RepresentateMatrix(GeneralMatrix matrix)
+        private string RepresentateMatrix(double[][] matrix)
         {
             var builder = new StringBuilder();
 
@@ -112,7 +110,7 @@ namespace EigenThings
             {
                 for (int j = 0; j < Vertices; j++)
                 {
-                    builder.Append(matrix.GetElement(i, j).ToString(" 0.00 ;-0.00 "));
+                    builder.Append(matrix[i][j].ToString(" 0.00 ;-0.00 "));
                 }
                 builder.Append("\n");
             }
@@ -127,11 +125,16 @@ namespace EigenThings
 
             Vertices = vertices;
             Graph = new BidirectionalGraph<string, IEdge<string>>();
-            AdjacencyMatrix = new GeneralMatrix(vertices, vertices);
-            LaplacianMatrix = new GeneralMatrix(vertices, vertices);
+            AdjacencyMatrix = new double[Vertices][];
+            LaplacianMatrix = new double[Vertices][];
+
 
             foreach (var i in Enumerable.Range(1, vertices))
+            {
+                AdjacencyMatrix[i - 1] = new double[Vertices];
+                LaplacianMatrix[i - 1] = new double[Vertices];
                 Graph.AddVertex(i.ToString());
+            }
 
             for (int i = 1; i + 1 < file.Length; i += 2)
             {
@@ -139,11 +142,12 @@ namespace EigenThings
                 var end = file[i + 1];
 
                 if (start == end) continue;
-                AdjacencyMatrix.SetElement(start - 1, end - 1, 1);
-                AdjacencyMatrix.SetElement(end - 1, start - 1, 1);
+                AdjacencyMatrix[start - 1][end - 1] = 1;
+                AdjacencyMatrix[end - 1][start - 1] = 1;
 
-                LaplacianMatrix.SetElement(start - 1, end - 1, -1);
-                LaplacianMatrix.SetElement(end - 1, start - 1, -1);
+                LaplacianMatrix[start - 1][end - 1] = -1;
+                LaplacianMatrix[end - 1][start - 1] = -1;
+
 
                 Graph.AddEdge(new Edge<string>(start.ToString(), end.ToString()));
                 Graph.AddEdge(new Edge<string>(end.ToString(), start.ToString()));
@@ -151,16 +155,16 @@ namespace EigenThings
 
             for (int i = 0; i < vertices; i++)
             {
-                var count = 0;
+                var count = 0.0;
                 for (int j = 0; j < vertices; j++)
                 {
-                    count += (int)AdjacencyMatrix.GetElement(i, j);
+                    count += AdjacencyMatrix[i][j];
                 }
-                LaplacianMatrix.SetElement(i, i, count);
+                LaplacianMatrix[i][i] = count;
             }
 
-            LaplacianEigen = LaplacianMatrix.Eigen();
-            AdjacencyEigen = AdjacencyMatrix.Eigen();
+            LaplacianEigen = new SymmetricEigenvalues(LaplacianMatrix);
+            AdjacencyEigen = new SymmetricEigenvalues(AdjacencyMatrix);
         }
     }
 }
