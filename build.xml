@@ -77,6 +77,7 @@
       <ExcludeSrcDir Include=".\**\build\**"/>
       <ExcludeSrcDir Include=".\**\obj\**"/>
       <ExcludeSrcDir Include=".\**\.svn\**"/>
+	  <ExcludeSrcDir Include=".\**\.git\**"/>
       <ExcludeSrcDir Include=".\**\_svn\**"/>
       <ExcludeSrcDir Include=".\**\*.zip"/>
     </ItemGroup>
@@ -90,28 +91,6 @@
     <Delete Files="$(PackageDir)\$(PackageSrcZipFile)"/>
     <Zip Files="@(ZipSrcDir)" ZipFileName="$(PackageDir)\$(PackageSrcZipFile)" WorkingDirectory="$(MSBuildProjectDirectory)"/>
   </Target>
-  
-  <Target Name="Publish" DependsOnTargets="Package;PackageSource">
-    <UploadToGoogleCode
-      UserName="$(GCUsername)"
-      Password="$(GCPassword)"
-      ProjectName="$(GCProjectName)"
-      LocalFile="$(PackageDir)\$(PackageSrcZipFile)"
-      TargetFileName="$(PackageSrcZipFile)"
-      Summary="EigenThings v$(ProductVersion).$(BuildTag) (Source)"
-      Labels="Nightly;Type-Package;Featured"
-              />
-  
-  <UploadToGoogleCode
-     UserName="$(GCUsername)"
-     Password="$(GCPassword)"
-     ProjectName="$(GCProjectName)"
-     LocalFile="$(PackageDir)\$(PackageBinZipFile)"
-     TargetFileName="$(PackageBinZipFile)"
-     Summary="EigenThings v$(ProductVersion).$(BuildTag)"
-     Labels="Nightly;Type-Package;Featured"
-      />
-	  
-  </Target>
+
 
 </Project>
